@@ -31,7 +31,7 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
     const [orderDetail, setOrderDetail] = React.useState<Iorder[]>([])
 
     //Get list orders from redux
-    const { accessToken } = useAppSelector(state => selectAuth(state))
+    const { accessToken, currentUser } = useAppSelector(state => selectAuth(state))
     const { orders, message } = useAppSelector(state => selectOrder(state))
 
     //Check if has message of order redux will display
@@ -98,6 +98,8 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
                             colSpan={
                                 order.paid
                                     ? [6, 6, 6, 6]
+                                    : currentUser && currentUser.role === "admin" 
+                                    ? [6, 6, 6, 6]
                                     : [6, 6, 4, 4]
                             }
                             border="1px solid teal"
@@ -117,10 +119,10 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
                                         SHIPPING
                                     </Box>
                                     <Box>
-                                        NAME: {order.user.name}
+                                        NAME: {order.user && order.user.name}
                                     </Box>
                                     <Box>
-                                        EMAIL: {order.user.email}
+                                        EMAIL: {order.user && order.user.email}
                                     </Box>
                                     <Box>
                                         ADDRESS: {order.address}
@@ -140,11 +142,23 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
                                                 : "red.400"
                                         }
                                     >
-                                        {
-                                            order.delivered
-                                                ? "Delivered"
-                                                : "Not Delivered"
-                                        }
+                                        <HStack>
+                                            <Box>
+                                                {
+                                                    order.delivered
+                                                        ? "Delivered"
+                                                        : "Not Delivered"
+                                                }
+                                            </Box>
+
+                                            {
+                                                currentUser && currentUser.role === "admin" && !order.delivered && (
+                                                    <Button colorScheme="blackAlpha">
+                                                        Mark as delivered
+                                                    </Button>
+                                                )
+                                            }
+                                        </HStack>
                                     </Center>
                                 </Box>
 
@@ -205,7 +219,7 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
                                                                 <Link
                                                                     href={{
                                                                         pathname: '/product/[id]',
-                                                                        query: {id: product._id}
+                                                                        query: { id: product._id }
                                                                     }}
                                                                     passHref
                                                                 >
@@ -256,7 +270,9 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
                             display={
                                 order.paid
                                     ? "none"
-                                    : "block"
+                                    : currentUser && currentUser.role === "admin" 
+                                        ? "none"
+                                        : "block"
                             }
                         >
                             <Box border="1px solid teal" padding="20px" borderRadius="md">

@@ -14,7 +14,6 @@ const accessToken = async (req: NextApiRequest, res: NextApiResponse) => {
 
         //Check live refresh token
         const rf_token = req.cookies.refreshtoken
-        console.log("dfksdfsdafsafsafsaf", rf_token);
         
         if (!rf_token) return res.status(400).json({ err: "Please login now!" })
 

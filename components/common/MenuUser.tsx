@@ -10,7 +10,7 @@ import { auth_logout_success } from '@/reduxState/actionTypes/authAction';
 import Link from 'next/link';
 
 export interface IMenuUserProps {
-    user: IUserInfor | null
+    user: IUserInfor
 }
 
 export default function MenuUser({ user }: IMenuUserProps) {
@@ -47,6 +47,15 @@ export default function MenuUser({ user }: IMenuUserProps) {
                     </MenuItem>
                 </Link>
                 <MenuItem onClick={handleLogout}>Log out</MenuItem>
+                {
+                    user.role === "admin" && (
+                        <>
+                            <MenuItem onClick={handleLogout}>Users</MenuItem>
+                            <MenuItem onClick={handleLogout}>Products</MenuItem>
+                            <MenuItem onClick={handleLogout}>Categories</MenuItem>
+                        </>
+                    )
+                }
             </MenuList>
         </Menu>
     );
