@@ -15,8 +15,10 @@ export const signUpUser = ({ name, email, password, cf_password }: IUserInfor) =
 
     if (res.err) {
         dispatch(auth_signup_reject(res.err))
+        return false
     } else {
         dispatch(auth_signup_success({ name, email, password, cf_password }))
+        return true
     }
 }
 

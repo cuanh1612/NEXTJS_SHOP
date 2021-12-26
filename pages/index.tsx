@@ -1,19 +1,19 @@
+import Empty from '@/components/common/Empty'
+import ProductItem from '@/components/product/ProductItem'
 import { UseToast } from '@/hooks'
 import { MainLayout } from '@/layouts'
 import { IProduct, NextPageWithLayout } from "@/models/common"
 import { auth_message_clear } from '@/reduxState/actionTypes/authAction'
+import { cart_message_clear } from '@/reduxState/actionTypes/CartAction'
 import { useAppSelector } from '@/reduxState/hooks'
 import { selectAuth, selectCart } from '@/reduxState/store'
-import { Box, Grid, GridItem, SimpleGrid } from '@chakra-ui/react'
+import { Box, SimpleGrid } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { getData } from 'utils/fetchData'
-import Empty from '@/components/common/Empty'
-import ProductItem from '@/components/product/ProductItem'
-import { cart_message_clear } from '@/reduxState/actionTypes/CartAction'
 
 interface IHomeProps {
   products: IProduct[],
@@ -22,7 +22,6 @@ interface IHomeProps {
 const Home: NextPageWithLayout = ({ products, result }: IHomeProps) => {
   //State 
   const [Products, setProducts] = useState(products)
-  console.log(Products);
 
   //Router
   const router = useRouter()

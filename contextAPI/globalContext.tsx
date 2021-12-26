@@ -19,7 +19,7 @@ const GlobalContext = createContext({
 
 function GlobalContextProvider({ children }: IGlobalContextProps) {
   //Select infor user 
-  const { accessToken } = useAppSelector(state => selectAuth(state))
+  const { accessToken, currentUser } = useAppSelector(state => selectAuth(state))
 
   //Dispatch
   const dispatch = useDispatch()
@@ -65,10 +65,10 @@ function GlobalContextProvider({ children }: IGlobalContextProps) {
 
   //Get all users when current user has role is admin--------
   useEffect(() => {
-    if (accessToken) {
+    if (accessToken && currentUser?.role === "admin") {
       dispatch(getAllUsers(accessToken as string))
     }
-  }, [accessToken])
+  }, [accessToken, currentUser])
   //Get all users when current user has role is admin--------
   const value = {
     user,

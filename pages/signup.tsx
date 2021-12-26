@@ -52,6 +52,7 @@ const SignUp: NextPageWithLayout = (props: ISignUp) => {
 
     const { name, email, password, cf_password } = userData
 
+    //Handle sign up
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
 
@@ -59,7 +60,13 @@ const SignUp: NextPageWithLayout = (props: ISignUp) => {
         const errMsg = validSignUp({ name, email, password, cf_password })
         if (errMsg) return toast.showToast("Inform sign up:", errMsg, "warning")
 
-        dispatch(signUpUser({ name, email, password, cf_password }))
+        const resultSignUp = await dispatch(signUpUser({ name, email, password, cf_password }))
+        if(!resultSignUp){
+            return
+        } else{
+            router.push("/signin")
+        }
+        
     }
 
     return (
