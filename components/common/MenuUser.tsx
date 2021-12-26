@@ -50,7 +50,13 @@ export default function MenuUser({ user }: IMenuUserProps) {
                 {
                     user.role === "admin" && (
                         <>
-                            <MenuItem onClick={handleLogout}>Users</MenuItem>
+                            <Link href="/users" passHref>
+                                <MenuItem>
+                                    <a>
+                                        Users
+                                    </a>
+                                </MenuItem>
+                            </Link>
                             <MenuItem onClick={handleLogout}>Products</MenuItem>
                             <MenuItem onClick={handleLogout}>Categories</MenuItem>
                         </>

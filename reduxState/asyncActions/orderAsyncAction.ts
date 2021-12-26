@@ -4,7 +4,7 @@ import { order_add_list, order_add_message, order_update_item_pending, order_upd
 import { getData } from "@/utils"
 import { IMessage, Iorder } from "@/models/common"
 
-//Clear all cart
+//Add new liskt order
 export const orderAddList = (accessToken: string) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     const res = await getData("order/getOrders", accessToken)
 

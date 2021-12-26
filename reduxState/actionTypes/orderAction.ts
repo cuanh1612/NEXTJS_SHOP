@@ -7,7 +7,7 @@ import {
     ORDER_UPDATE_ITEM_SUCCESS
 } from '@/reduxState/actions'
 
-// Action for add cart
+// Action for order
 export const order_add_list = (orders: Iorder[]) => {
     console.log(orders);
 

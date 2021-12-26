@@ -4,9 +4,10 @@ import { useDispatch } from 'react-redux';
 import { auth_first_login, auth_signin_success } from '@/reduxState/actionTypes/authAction';
 import Loading from '@/components/common/Loading'
 import { useAppSelector } from '@/reduxState/hooks';
-import { selectCart } from '@/reduxState/store';
+import { selectAuth, selectCart, selectUsers } from '@/reduxState/store';
 import { json } from 'node:stream/consumers';
 import { cart_save_new } from '@/reduxState/actionTypes/CartAction';
+import { getAllUsers } from '@/reduxState/asyncActions/usersAsyncAction';
 
 export interface IGlobalContextProps {
   children: any
@@ -17,6 +18,9 @@ const GlobalContext = createContext({
 })
 
 function GlobalContextProvider({ children }: IGlobalContextProps) {
+  //Select infor user 
+  const { accessToken } = useAppSelector(state => selectAuth(state))
+
   //Dispatch
   const dispatch = useDispatch()
 
@@ -41,11 +45,6 @@ function GlobalContextProvider({ children }: IGlobalContextProps) {
       setLoading(false)
     }
   }, [])
-
-  const value = {
-    user,
-    setUser
-  }
   //-------------------------------------------
 
 
@@ -63,6 +62,18 @@ function GlobalContextProvider({ children }: IGlobalContextProps) {
     localStorage.setItem('Next_Shop_Cart', JSON.stringify(cart))
   }, [cart])
   //-----------------------------------------------------------------
+
+  //Get all users when current user has role is admin--------
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(getAllUsers(accessToken as string))
+    }
+  }, [accessToken])
+  //Get all users when current user has role is admin--------
+  const value = {
+    user,
+    setUser
+  }
 
   return (
     <GlobalContext.Provider value={value}>
