@@ -1,19 +1,19 @@
+import PaypalBtn from '@/components/cart/paypalBtn';
 import { MainLayout } from '@/layouts';
 import { Iorder, NextPageWithLayout } from '@/models/common';
-import { order_add_list, order_message_clear } from '@/reduxState/actionTypes/orderAction';
+import { order_message_clear } from '@/reduxState/actionTypes/orderAction';
+import { orderAddList, orderUpdateItem } from '@/reduxState/asyncActions/orderAsyncAction';
 import { useAppSelector } from '@/reduxState/hooks';
 import { selectAuth, selectOrder } from '@/reduxState/store';
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Center, chakra, Container, Flex, Grid, GridItem, HStack, Spacer, VStack } from '@chakra-ui/react';
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Center, Flex, Grid, GridItem, HStack, Spacer } from '@chakra-ui/react';
+import { UseToast } from 'hooks/useToast';
+import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { BiArrowBack } from 'react-icons/bi'
 import { useDispatch } from 'react-redux';
-import { orderAddList } from '@/reduxState/asyncActions/orderAsyncAction'
-import Head from 'next/head';
-import PaypalBtn from '@/components/cart/paypalBtn';
-import { UseToast } from 'hooks/useToast';
+import { patchData } from 'utils/fetchData';
 
 export interface IOrderDetailProps {
 }
@@ -51,7 +51,17 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
         setOrderDetail(newArr)
     }, [orders])
 
-    console.log(orderDetail);
+    //Handle mark order delivered
+    const handleDelivered = async(orderId: string, order: Iorder) => {
+        await patchData(`order/delivered/${orderId}`, {}, accessToken as string).then(res => {
+            if(res.err) return toast.showToast("Inform mark deliverd:", res.err, "error")
+            dispatch(orderUpdateItem(orders, orderId, {
+                ...order,
+                delivered: true
+            }))
+            return toast.showToast("Inform mark deliverd:", res.msg, "success")
+        })
+    }
 
 
     return (
@@ -153,7 +163,7 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
 
                                             {
                                                 currentUser && currentUser.role === "admin" && !order.delivered && (
-                                                    <Button colorScheme="blackAlpha">
+                                                    <Button colorScheme="blackAlpha" onClick={() => handleDelivered(order._id, order)}>
                                                         Mark as delivered
                                                     </Button>
                                                 )
