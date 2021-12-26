@@ -17,6 +17,7 @@ export interface IUserInfor {
     password?: string,
     cf_password?: string,
     role?: string,
+    root?: boolean
     [index: string]: any
 }
 

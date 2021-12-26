@@ -23,3 +23,7 @@ a {
 .image_radius {
   border-radius: 10px;
 }
+
+.item_table:hover {
+  background-color: rgba(231, 247, 247, 0.596);
+}

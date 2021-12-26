@@ -15,7 +15,7 @@ import {
 } from '@/reduxState/actions'
 
 export interface IAuthInitialState {
-    currentUser: IUserInfor | null,
+    currentUser: Partial<IUserInfor> ,
     loading: boolean,
     isLogin: boolean,
     message: IMessage | null,
@@ -25,7 +25,7 @@ export interface IAuthInitialState {
 
 
 const initialState: IAuthInitialState = {
-    currentUser: null,
+    currentUser: {},
     loading: false,
     isLogin: false,
     message: null,
@@ -62,7 +62,7 @@ const authReducer = (state = initialState, action: authAction) => {
         case AUTH_LOGOUT_SUCCESS:
             return {
                 ...state,
-                currentUser: null,
+                currentUser: {},
                 loading: false,
                 isLogin: false,
                 accessToken: null,
