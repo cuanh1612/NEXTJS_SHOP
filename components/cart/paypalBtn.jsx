@@ -27,7 +27,9 @@ const paypalBtn = ({ orders, order, accessToken }) => {
                 // This function captures the funds from the transaction.
                 return actions.order.capture().then(function (details) {
                     //Patch to update payment success
-                    patchData(`order/${order._id}`, null, accessToken)
+                    patchData(`order/payment/${order._id}`, {
+                        paymentId: details.payer.payer_id
+                    }, accessToken)
                         .then(res => {
                             if (res.err) return dispatch(order_add_message({
                                 description: res.err,
@@ -38,7 +40,9 @@ const paypalBtn = ({ orders, order, accessToken }) => {
                             dispatch(orderUpdateItem(orders, order._id, {
                                 ...order,
                                 paid: true,
-                                dateOfPayment: new Date().toISOString()
+                                dateOfPayment: details.create_time,
+                                paymentId: details.payer.payer_id,
+                                method: 'Paypal'
                             }))
 
                             return dispatch(order_add_message({

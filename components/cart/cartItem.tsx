@@ -22,7 +22,7 @@ export default function App({ cart, product }: IAppProps) {
     const deleteProduct = () => {
         const newArr: IProduct[] = []
         for (const item of cart) {
-            if(item._id !== product._id){
+            if (item._id !== product._id) {
                 newArr.push(item)
             }
         }
@@ -45,7 +45,13 @@ export default function App({ cart, product }: IAppProps) {
                             borderRadius="lg"
                         />
                         <Box>
-                            <Link href={`/product/${product._id}`} passHref>
+                            <Link
+                                href={{
+                                    pathname: '/product/[id]',
+                                    query: { id: product._id }
+                                }}
+                                passHref
+                            >
                                 <Box fontWeight="semibold" cursor="pointer">
                                     <a>
                                         {product.title}

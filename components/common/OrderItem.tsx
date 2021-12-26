@@ -14,7 +14,13 @@ export default function OrderItem({ order }: IOrderItemProps) {
     return (
         <Tr>
             <Td>
-                <Link href={`/order/${order._id}`}>
+
+                <Link
+                    href={{
+                        pathname: '/order/[id]',
+                        query: { id: order._id }
+                    }}
+                >
                     <a>
                         <Tooltip label="Detail Order">
                             {order._id}

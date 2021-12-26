@@ -14,11 +14,16 @@ const paymentOrder = async (req: NextApiRequest, res: NextApiResponse) => {
         
         //Get Id order
         const {id} = req.query
+        const {paymentId} = req.body
+        console.log("Id payment ne", paymentId);
+        
 
         //Update order to payment
         await Orders.findOneAndUpdate({_id: id}, {
             paid: true,
-            dateOfPayment: new Date().toISOString()
+            dateOfPayment: new Date().toISOString(),
+            paymentId,
+            method: 'Paypal'
         } as UpdateQuery<{}>)
 
         return res.status(200).json({

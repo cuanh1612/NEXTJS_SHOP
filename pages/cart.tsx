@@ -93,6 +93,14 @@ const Cart: NextPageWithLayout = (props: ICartProps) => {
             return toast.showToast("Inform Payment", "Please add your address and mobile.", "warning")
         }
 
+        if (address.length < 20) {
+            return toast.showToast("Inform Payment", "The address should be at least 20 characters.", "warning")
+        }
+
+        if (mobile.length < 9 || mobile.length > 10) {
+            return toast.showToast("Inform Payment", "Mobile should have 10 digits.", "warning")
+        }
+
         let newCart = []
         //Check instock of product in cart and create new cart array
         for (const item of cart) {

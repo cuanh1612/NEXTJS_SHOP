@@ -45,6 +45,8 @@ export interface Iorder {
     total: number,
     user: IUserInfor,
     paid: boolean,
-    dateOfPayment?: string
+    dateOfPayment?: string,
+    paymentId: string,
+    method: string
     [index: string]: any
 }

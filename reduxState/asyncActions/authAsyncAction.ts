@@ -1,17 +1,11 @@
 import { IUserInfor } from '@/models/common'
+import {
+    auth_signin_pending, auth_signin_reject, auth_signin_success, auth_signup_pending, auth_signup_reject, auth_signup_success
+} from '@/reduxState/actionTypes/authAction'
+import { postData } from '@/utils'
+import Cookie from 'js-cookie'
 import { AnyAction } from 'redux'
 import { ThunkDispatch } from 'redux-thunk'
-import { postData } from '@/utils'
-import {
-    auth_signup_pending,
-    auth_signup_success,
-    auth_signup_reject,
-    auth_signin_pending,
-    auth_signin_success,
-    auth_signin_reject
-} from '@/reduxState/actionTypes/authAction'
-import Cookie from 'js-cookie'
-import jwt, { Secret } from 'jsonwebtoken'
 
 
 //Sign up account user

@@ -1,6 +1,6 @@
 import { MainLayout } from '@/layouts';
 import { Iorder, NextPageWithLayout } from '@/models/common';
-import { order_add_list } from '@/reduxState/actionTypes/orderAction';
+import { order_add_list, order_message_clear } from '@/reduxState/actionTypes/orderAction';
 import { useAppSelector } from '@/reduxState/hooks';
 import { selectAuth, selectOrder } from '@/reduxState/store';
 import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Center, chakra, Container, Flex, Grid, GridItem, HStack, Spacer, VStack } from '@chakra-ui/react';
@@ -38,6 +38,7 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
     React.useEffect(() => {
         if (message)
             toast.showToast("Inform payment:", message.description, message.status)
+        dispatch(order_message_clear())
     }, [message])
 
     //Get all list order 
@@ -90,10 +91,20 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
                 gap={4}
             >
 
-                <GridItem colSpan={[6, 6, 4, 4]} border="1px solid teal" padding="20px" borderRadius="md">
-                    {
-                        orderDetail.map(order => (
-                            <Flex key={order._id} direction="column">
+                {
+                    orderDetail.map(order => (
+                        <GridItem
+                            key={order._id}
+                            colSpan={
+                                order.paid
+                                    ? [6, 6, 6, 6]
+                                    : [6, 6, 4, 4]
+                            }
+                            border="1px solid teal"
+                            padding="20px"
+                            borderRadius="md"
+                        >
+                            <Flex direction="column">
                                 <Box fontSize="20px" fontWeight="medium">
                                     #{
                                         order._id
@@ -142,6 +153,13 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
                                         PAYMENT
                                     </Box>
 
+                                    <Box>
+                                        PAYMENTID: {order.paymentId ? order.paymentId : "Unpaid"}
+                                    </Box>
+                                    <Box>
+                                        METHOD: {order.method ? order.method : "Unpaid"}
+                                    </Box>
+
                                     <Center
                                         marginTop="20px"
                                         paddingY="15px"
@@ -184,7 +202,13 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
                                                                 className='image_radius'
                                                             />
                                                             <Box>
-                                                                <Link href={`/product/${product._id}`} passHref>
+                                                                <Link
+                                                                    href={{
+                                                                        pathname: '/product/[id]',
+                                                                        query: {id: product._id}
+                                                                    }}
+                                                                    passHref
+                                                                >
                                                                     <Box fontWeight="semibold" cursor="pointer">
                                                                         <a>
                                                                             {product.title}
@@ -216,28 +240,36 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
 
                                 </Box>
                             </Flex>
-                        ))
-                    }
-                </GridItem>
+                        </GridItem>
+                    ))
+                }
 
 
 
 
 
-                <GridItem colSpan={[6, 6, 2, 2]} >
-                    <Box border="1px solid teal" padding="20px" borderRadius="md">
-                        {
-                            orderDetail.map(order => (
-                                <Box key={order._id}>
+                {
+                    orderDetail.map(order => (
+                        <GridItem
+                            colSpan={[6, 6, 2, 2]}
+                            key={order._id}
+                            display={
+                                order.paid
+                                    ? "none"
+                                    : "block"
+                            }
+                        >
+                            <Box border="1px solid teal" padding="20px" borderRadius="md">
+                                <Box >
                                     <Box fontSize="20px" fontWeight="semibold" marginBottom="10px">
                                         TOTAL: <Box as="span" color="tomato">{order.total}$</Box>
                                     </Box>
                                     <PaypalBtn orders={orders} order={order} accessToken={accessToken} />
                                 </Box>
-                            ))
-                        }
-                    </Box>
-                </GridItem>
+                            </Box>
+                        </GridItem>
+                    ))
+                }
             </Grid>
         </>
     );

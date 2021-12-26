@@ -20,8 +20,6 @@ export const orderAddList = (accessToken: string) => async (dispatch: ThunkDispa
 
 //Update one order when disorder update payment
 export const orderUpdateItem = (orders: Iorder[], id: string, order: Iorder) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
-    console.log("dfkjhfkadajfkdhafkjhfasd");
-    
     //Find order to update, if order exist in order list will update
     const newOrders = orders.map(item => (item._id === id ? order : item))
     
