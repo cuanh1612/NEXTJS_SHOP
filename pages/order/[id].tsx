@@ -32,7 +32,7 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
 
     //Get list orders from redux
     const { accessToken, currentUser } = useAppSelector(state => selectAuth(state))
-    const { orders, message } = useAppSelector(state => selectOrder(state))
+    const { orders, message, loading } = useAppSelector(state => selectOrder(state))
 
     //Check if has message of order redux will display
     React.useEffect(() => {
@@ -52,13 +52,17 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
     }, [orders])
 
     //Handle mark order delivered
-    const handleDelivered = async(orderId: string, order: Iorder) => {
-        await patchData(`order/delivered/${orderId}`, {}, accessToken as string).then(res => {
-            if(res.err) return toast.showToast("Inform mark deliverd:", res.err, "error")
-            dispatch(orderUpdateItem(orders, orderId, {
+    const handleDelivered = async (order: Iorder) => {
+        await patchData(`order/delivered/${order._id}`, {}, accessToken as string).then(res => {
+            if (res.err) return toast.showToast("Inform mark deliverd:", res.err, "error")
+
+            //Update order delivered is true in redeux
+            //If unpaid method will update is Receive Cash
+            dispatch(orderUpdateItem(orders, order._id, {
                 ...order,
-                delivered: true
+                ...res.result
             }))
+
             return toast.showToast("Inform mark deliverd:", res.msg, "success")
         })
     }
@@ -108,9 +112,9 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
                             colSpan={
                                 order.paid
                                     ? [6, 6, 6, 6]
-                                    : currentUser && currentUser.role === "admin" 
-                                    ? [6, 6, 6, 6]
-                                    : [6, 6, 4, 4]
+                                    : currentUser && currentUser.role === "admin"
+                                        ? [6, 6, 6, 6]
+                                        : [6, 6, 4, 4]
                             }
                             border="1px solid teal"
                             padding="20px"
@@ -163,7 +167,11 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
 
                                             {
                                                 currentUser && currentUser.role === "admin" && !order.delivered && (
-                                                    <Button colorScheme="blackAlpha" onClick={() => handleDelivered(order._id, order)}>
+                                                    <Button
+                                                        colorScheme="blackAlpha"
+                                                        onClick={() => handleDelivered(order)}
+                                                        isLoading={loading}
+                                                    >
                                                         Mark as delivered
                                                     </Button>
                                                 )
@@ -178,7 +186,7 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
                                     </Box>
 
                                     <Box>
-                                        PAYMENTID: {order.paymentId ? order.paymentId : "Unpaid"}
+                                        PAYMENTID: {order.paymentId ? order.paymentId : "User has not paid with Paypal"}
                                     </Box>
                                     <Box>
                                         METHOD: {order.method ? order.method : "Unpaid"}
@@ -280,7 +288,7 @@ const OrderDetail: NextPageWithLayout = (props: IOrderDetailProps) => {
                             display={
                                 order.paid
                                     ? "none"
-                                    : currentUser && currentUser.role === "admin" 
+                                    : currentUser && currentUser.role === "admin"
                                         ? "none"
                                         : "block"
                             }

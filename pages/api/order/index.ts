@@ -9,18 +9,18 @@ import { NextApiRequest, NextApiResponse } from 'next'
 connectDB()
 
 const createOrder = async (req: NextApiRequest, res: NextApiResponse) => {
-
+    
     if (req.method !== "POST") return res.status(400).json({ err: "Method mot valid." })
+    
     try {
         const result: any = await auth(req, res)
+        
         const {address, mobile, cart, total} = req.body as {
             address: string,
             mobile: number,
             cart: IProduct[],
             total: number
         }  
-        
-        
         
         console.log("Hello", address, mobile, cart, total);
         

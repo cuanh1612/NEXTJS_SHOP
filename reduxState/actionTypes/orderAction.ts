@@ -3,7 +3,8 @@ import {
     ORDER_ADD_LIST,
     ORDER_ADD_MESSAGE,
     ORDER_MESSAGE_CLEAR,
-    ORDER_UPDATE_ITEM
+    ORDER_UPDATE_ITEM_PENDING,
+    ORDER_UPDATE_ITEM_SUCCESS
 } from '@/reduxState/actions'
 
 // Action for add cart
@@ -33,9 +34,15 @@ export const order_message_clear = () => {
     } as const)
 }
 
-export const order_update_item = (orders: Iorder[]) => {
+export const order_update_item_pending = () => {
     return ({
-        type: ORDER_UPDATE_ITEM,
+        type: ORDER_UPDATE_ITEM_PENDING
+    } as const)
+}
+
+export const order_update_item_success = (orders: Iorder[]) => {
+    return ({
+        type: ORDER_UPDATE_ITEM_SUCCESS,
         payload: {
             orders
         }
@@ -46,5 +53,6 @@ export type orderAction = ReturnType<
     typeof order_add_list |
     typeof order_add_message |
     typeof order_message_clear |
-    typeof order_update_item
+    typeof order_update_item_success |
+    typeof order_update_item_pending
 >
