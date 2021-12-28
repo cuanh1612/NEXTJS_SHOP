@@ -70,6 +70,7 @@ function GlobalContextProvider({ children }: IGlobalContextProps) {
     }
   }, [accessToken, currentUser])
   //Get all users when current user has role is admin--------
+  
   const value = {
     user,
     setUser

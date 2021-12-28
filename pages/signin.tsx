@@ -78,7 +78,7 @@ const SignIn: NextPageWithLayout = () => {
                                 <Button marginLeft="5px" color="teal" variant='link'>
                                     <Link href="/signup">
                                         <a>
-                                            Sign In
+                                            Sign Up
                                         </a>
                                     </Link>
                                 </Button>

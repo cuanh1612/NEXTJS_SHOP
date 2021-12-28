@@ -13,7 +13,7 @@ export type AppPropsWithLayout = AppProps & {
 
 export interface IUserInfor {
     name?: string,
-    email: string,
+    email?: string,
     password?: string,
     cf_password?: string,
     role?: string,

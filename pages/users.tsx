@@ -1,28 +1,45 @@
+import UserList from '@/components/common/UsersItem';
 import { MainLayout } from '@/layouts';
-import { NextPageWithLayout } from '@/models/common';
+import { IMessage, IUserInfor, NextPageWithLayout } from '@/models/common';
+import { users_message_clear } from '@/reduxState/actionTypes/usersAction';
 import { useAppSelector } from '@/reduxState/hooks';
 import { selectAuth, selectUsers } from '@/reduxState/store';
-import { Avatar, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, HStack, IconButton, Table, TableCaption, Tbody, Td, Tfoot, Th, Thead, Tooltip, Tr } from '@chakra-ui/react';
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Table, TableCaption, Tbody, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
+import { UseToast } from 'hooks/useToast';
 import Head from 'next/head';
 import Link from 'next/link';
 import * as React from 'react';
-import { BsCheckLg } from 'react-icons/bs';
-import { MdOutlineDangerous } from 'react-icons/md';
-import { GrDocumentUpdate } from 'react-icons/gr'
-import { AiOutlineDelete } from 'react-icons/ai'
-import UserList from '@/components/common/UsersItem';
+import { useDispatch } from 'react-redux';
 
 export interface IUsersProps {
 }
 
 const Users: NextPageWithLayout = (props: IUsersProps) => {
+    //Toast Hook
+    const toast = UseToast()
+    //Dispatch 
+    const dispatch = useDispatch()
+
     //Get all users from redux
-    const { users } = useAppSelector(state => selectUsers(state))
+    const { users, loading } = useAppSelector(state => selectUsers(state))
 
     //Get infor current admin
-    const { currentUser } = useAppSelector(state => selectAuth(state))
+    const { currentUser, accessToken } = useAppSelector(state => selectAuth(state))
+    const { message } = useAppSelector(state => selectUsers(state))
 
-    console.log("All users from redux", users);
+
+    //Show message of user redux
+    React.useEffect(() => {
+        if (message) {
+            toast.showToast(
+                "Inform delete user:",
+                message.description,
+                message.status
+            )
+
+            dispatch(users_message_clear())
+        }
+    }, [message])
 
     return (
         <>
@@ -67,7 +84,13 @@ const Users: NextPageWithLayout = (props: IUsersProps) => {
                     <Tbody>
                         {
                             users.map((user, index) => (
-                                <UserList user={user} key={user._id} index={index} currentUser={currentUser}/>
+                                <UserList
+                                    user={user}
+                                    key={user._id}
+                                    index={index}
+                                    currentUser={currentUser as Partial<IUserInfor>}
+                                    accessToken={accessToken as string}
+                                />
                             ))
                         }
 
