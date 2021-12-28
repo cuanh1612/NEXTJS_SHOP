@@ -12,6 +12,10 @@ import { useAppSelector } from '@/reduxState/hooks';
 import { selectAuth, selectUsers } from '@/reduxState/store';
 import { UseToast } from 'hooks/useToast';
 import { users_message_clear } from '@/reduxState/actionTypes/usersAction';
+import { useRouter } from 'next/router';
+import { auth_logout_success } from '@/reduxState/actionTypes/authAction';
+import Cookie from 'js-cookie'
+import jwt from 'jsonwebtoken'
 
 export interface IUserListProps {
   currentUser: Partial<IUserInfor>,
@@ -21,6 +25,9 @@ export interface IUserListProps {
 }
 
 export default function UserList({ user, currentUser, index }: IUserListProps) {
+  //router
+  const router = useRouter()
+
   //Toast hook
   const toast = UseToast()
 
@@ -38,8 +45,20 @@ export default function UserList({ user, currentUser, index }: IUserListProps) {
 
   //Handle delete User
   const deleteUser = async (id: string) => {
-    dispatch(userDeleteItem(users, id, accessToken as string))
-    //Delete database
+    //Get id of current user
+    const decode: any = await jwt.verify(accessToken as string, process.env.ACCESS_TOKEN_SECRET as jwt.Secret)
+    console.log(decode.id);
+    
+    //Delete user in database and redux
+    await dispatch(userDeleteItem(users, id, accessToken as string))
+
+    // logout with id match with id of current user
+    if (decode.id === id) {
+      Cookie.remove('refreshtoken', { path: "/api/auth/accessToken" })
+      localStorage.removeItem('firstLogin')
+      dispatch(auth_logout_success(null))
+      return router.push('/signin')
+    }
   }
 
   return (
@@ -101,7 +120,7 @@ export default function UserList({ user, currentUser, index }: IUserListProps) {
             <HStack>
 
 
-{/* Update usre button */}
+              {/* Update usre button */}
               {
                 currentUser.root
                   ? (
@@ -134,7 +153,7 @@ export default function UserList({ user, currentUser, index }: IUserListProps) {
               }
 
 
-{/* Delete usre button */}
+              {/* Delete usre button */}
               {
                 currentUser.root
                   ? (
@@ -158,7 +177,7 @@ export default function UserList({ user, currentUser, index }: IUserListProps) {
       }
 
 
-{/* Dialog display when user enter delete button */}
+      {/* Dialog display when user enter delete button */}
       <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelRef as React.RefObject<any>}

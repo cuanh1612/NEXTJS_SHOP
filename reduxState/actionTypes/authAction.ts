@@ -75,14 +75,11 @@ export const auth_save_user = (user: IUserInfor) => {
 }
 
 //Auth action for save user update
-export const auth_logout_success = () => {
+export const auth_logout_success = (message: IMessage | null) => {
     return ({
         type: AUTH_LOGOUT_SUCCESS,
         payload: {
-            message: {
-                description: "Log out account success.",
-                status: "success"
-            }
+            message: message
         }
     } as const)
 }

@@ -27,7 +27,10 @@ export default function MenuUser({ user }: IMenuUserProps) {
     const handleLogout = () => {
         Cookie.remove('refreshtoken', { path: "/api/auth/accessToken" })
         localStorage.removeItem('firstLogin')
-        dispatch(auth_logout_success())
+        dispatch(auth_logout_success({
+            description: "Log out account success.",
+            status: "success"
+        }))
         return router.push('/signin')
     }
 
