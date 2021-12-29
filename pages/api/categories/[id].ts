@@ -7,16 +7,16 @@ connectDB()
 
 const categoryApi = async (req: NextApiRequest, res: NextApiResponse) => {
     switch (req.method) {
-        case "POST":
-            return await createCategory(req, res)
-        case "GET":
-            return await getCategories(req, res)
+        case "PATCH":
+            return await updateCategory(req, res)
+        case "DELETE":
+            return await delteCategory(req, res)
         default:
             return res.status(400).json({ err: "Method mot valid." })
     }
 }
 
-const createCategory = async (req: NextApiRequest, res: NextApiResponse) => {
+const updateCategory = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         //Check auth with middleware
         const result: any = await auth(req, res)
@@ -25,17 +25,16 @@ const createCategory = async (req: NextApiRequest, res: NextApiResponse) => {
         if (result.role !== 'admin' || !result.root)
             return res.status(400).json({ err: 'Authentication is not valid.' })
 
-        const {name} = req.body
+        //Get id and name to update
+        const { name } = req.body
+        const { id } = req.query
 
-        if(!name) return res.status(400).json({err: "Name can not be left blank."})
+        if (!name) return res.status(400).json({ err: "Name can not be left blank." })
 
-        const newCategory: any = await new categoryModel({name})
-
-        await newCategory.save()
+        await categoryModel.findOneAndUpdate({ _id: id }, { name })
 
         return res.status(200).json({
-            msg: "Success! Created a new category.",
-            newCategory
+            msg: "Success! Updated category.",
         })
 
     } catch (error: any) {
@@ -43,14 +42,22 @@ const createCategory = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 }
 
-const getCategories = async (req: NextApiRequest, res: NextApiResponse) => {
+const delteCategory = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        //Get all categories
-        const categories = await categoryModel.find()
+        //Check auth with middleware
+        const result: any = await auth(req, res)
 
+        //Check if user is admin
+        if (result.role !== 'admin' || !result.root)
+            return res.status(400).json({ err: 'Authentication is not valid.' })
+        
+        //Get id
+        const {id} = req.query
+
+        await categoryModel.findByIdAndDelete(id)
         //Return categories
         return res.status(200).json({
-            categories
+            msg: "Success! Deleted category.",
         })
 
     } catch (error: any) {

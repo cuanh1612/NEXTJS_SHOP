@@ -54,5 +54,6 @@ export interface Iorder {
 }
 
 export interface ICategory {
-    name: string
+    name: string,
+    [index: string]: any
 }
