@@ -4,7 +4,7 @@ import { ReactElement, ReactNode } from "react";
 
 export type NextPageWithLayout = NextPage<any> & {
     getLayout?: (page: ReactElement) => ReactNode,
-    typeAuth?: "notLoged" | "loged"
+    typeAuth?: "notLoged" | "loged" | "logedAdmin"
 }
 
 export type AppPropsWithLayout = AppProps & {
@@ -51,4 +51,8 @@ export interface Iorder {
     paymentId: string,
     method: string
     [index: string]: any
+}
+
+export interface ICategory {
+    name: string
 }

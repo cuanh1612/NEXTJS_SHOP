@@ -4,21 +4,23 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { createAccessToken } from '@/utils'
 import jwt, { Secret } from 'jsonwebtoken'
 import { IUserInfor } from '@/models/common'
+import Cookie from 'cookies'
 
 connectDB()
 
 const accessToken = async (req: NextApiRequest, res: NextApiResponse) => {
-
+    const cookies = new Cookie(req, res)
     if (req.method !== "GET") return res.status(400).json({ err: "Method mot valid." })
     try {
-
         //Check live refresh token
-        const rf_token = req.cookies.refreshtoken
-        
+        const rf_token = await cookies.get('refreshtoken')
+             
         if (!rf_token) return res.status(400).json({ err: "Please login now!" })
 
         //Check refresh verify
         const result: any = await jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET as Secret, { ignoreExpiration: true })
+        console.log(result);
+        
         if (!result) return res.status(400).json({ err: 'Your token is incorrect or has expired.' })
         const exp = new Date(result.exp * 1000).toDateString()
         const timeNow = new Date().toDateString()
@@ -42,8 +44,6 @@ const accessToken = async (req: NextApiRequest, res: NextApiResponse) => {
             }
         })
     } catch (error: any) {
-        console.log(error);
-
         return res.status(500).json({ err: "System has some wrong!" })
     }
 }

@@ -8,6 +8,7 @@ import { UseToast } from '@/hooks';
 import { useDispatch } from 'react-redux';
 import { auth_logout_success } from '@/reduxState/actionTypes/authAction';
 import Link from 'next/link';
+import { getData } from 'utils/fetchData';
 
 export interface IMenuUserProps {
     user: IUserInfor
@@ -24,13 +25,16 @@ export default function MenuUser({ user }: IMenuUserProps) {
     const dispatch = useDispatch()
 
     //Handle Logout
-    const handleLogout = () => {
-        Cookie.remove('refreshtoken', { path: "/api/auth/accessToken" })
-        localStorage.removeItem('firstLogin')
-        dispatch(auth_logout_success({
-            description: "Log out account success.",
-            status: "success"
-        }))
+    const handleLogout = async () => {
+        await getData('auth/logout').then(res => {
+            if (!res.err) {
+                localStorage.removeItem('firstLogin')
+                dispatch(auth_logout_success({
+                    description: "Log out account success.",
+                    status: "success"
+                }))
+            }
+        })
         return router.push('/signin')
     }
 
@@ -61,7 +65,13 @@ export default function MenuUser({ user }: IMenuUserProps) {
                                 </MenuItem>
                             </Link>
                             <MenuItem onClick={handleLogout}>Products</MenuItem>
-                            <MenuItem onClick={handleLogout}>Categories</MenuItem>
+                            <Link href="/categories" passHref>
+                                <MenuItem>
+                                    <a>
+                                        Categories
+                                    </a>
+                                </MenuItem>
+                            </Link>
                         </>
                     )
                 }

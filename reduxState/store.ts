@@ -4,24 +4,28 @@ import AuthReducer from './reducers/auth'
 import CartReducer from './reducers/cart'
 import OrderReducer from './reducers/order'
 import UsersReducer from './reducers/users'
+import CategoriesReducer from './reducers/categories'
 import thunk from 'redux-thunk'
 import { IAuthInitialState } from '@/reduxState/reducers/auth'
 import { ICartInitialState } from '@/reduxState/reducers/cart'
 import { IOrderInitialState } from '@/reduxState/reducers/order'
 import { IUsersInitialState } from '@/reduxState/reducers/users'
+import { ICategoriesInitialState } from '@/reduxState/reducers/categories'
 
 interface IRootReducer {
     auth: IAuthInitialState,
     cart: ICartInitialState,
     order: IOrderInitialState,
-    users: IUsersInitialState
+    users: IUsersInitialState,
+    categories: ICategoriesInitialState
 }
 
 const rootReducer = combineReducers({
     auth: AuthReducer,
     cart: CartReducer,
     order: OrderReducer,
-    users: UsersReducer
+    users: UsersReducer,
+    categories: CategoriesReducer
 })
 
 export const store = createStore(
@@ -47,3 +51,6 @@ export const selectOrder = (state: IRootReducer) => state.order
 
 //Export select users
 export const selectUsers = (state: IRootReducer) => state.users
+
+//Export select categories
+export const selectCategories = (state: IRootReducer) => state.categories

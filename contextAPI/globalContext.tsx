@@ -1,13 +1,13 @@
-import React, { createContext, useEffect, useState } from 'react';
-import { getData } from '@/utils';
-import { useDispatch } from 'react-redux';
+import Loading from '@/components/common/Loading';
 import { auth_first_login, auth_signin_success } from '@/reduxState/actionTypes/authAction';
-import Loading from '@/components/common/Loading'
-import { useAppSelector } from '@/reduxState/hooks';
-import { selectAuth, selectCart, selectUsers } from '@/reduxState/store';
-import { json } from 'node:stream/consumers';
 import { cart_save_new } from '@/reduxState/actionTypes/CartAction';
+import { getCategories } from '@/reduxState/asyncActions/categoriesAsyncAction';
 import { getAllUsers } from '@/reduxState/asyncActions/usersAsyncAction';
+import { useAppSelector } from '@/reduxState/hooks';
+import { selectAuth, selectCart } from '@/reduxState/store';
+import { getData } from '@/utils';
+import React, { createContext, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export interface IGlobalContextProps {
   children: any
@@ -71,6 +71,13 @@ function GlobalContextProvider({ children }: IGlobalContextProps) {
   }, [accessToken, currentUser])
   //Get all users when current user has role is admin--------
 
+  //Get all categories when current user has logged
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(getCategories())
+    }
+  }, [accessToken, dispatch])
+
   const value = {
     user,
     setUser
@@ -87,4 +94,4 @@ function GlobalContextProvider({ children }: IGlobalContextProps) {
   );
 }
 
-export { GlobalContext, GlobalContextProvider }
+export { GlobalContext, GlobalContextProvider };

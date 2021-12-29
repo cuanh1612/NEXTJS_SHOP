@@ -15,6 +15,7 @@
     "@reduxjs/toolkit": "^1.7.0",
     "@types/js-cookie": "^3.0.1",
     "bcrypt": "^5.0.1",
+    "cookies": "^0.8.0",
     "framer-motion": "^5.4.5",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/cookies": "^0.7.7",
     "@types/jsonwebtoken": "^8.5.6",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^16.11.12",

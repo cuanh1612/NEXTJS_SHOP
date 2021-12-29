@@ -37,12 +37,6 @@ export const signInUser = ({ email, password }: IUserInfor) => async (dispatch: 
             status: "success"
         }))
 
-        //Set cookie to save refresh token in path api/auth/accessToken
-        Cookie.set('refreshtoken', res.refresh_token, {
-            path: '/api/auth/accessToken',
-            expires: 7
-        })
-
         //Save is login in local
         localStorage.setItem('firstLogin', 'true')
     }

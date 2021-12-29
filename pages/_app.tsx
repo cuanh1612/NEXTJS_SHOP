@@ -1,5 +1,6 @@
 import AuthNotLoged from '@/components/common/Auth/AuthNotLogin'
 import AuthLoged from '@/components/common/Auth/AuthLogin'
+import AuthLogedAdmin from '@/components/common/Auth/AuthLoginAdmin'
 import { AppPropsWithLayout } from '@/models/common'
 import { store } from '@/reduxState/store'
 import { theme } from '@/theme'
@@ -39,6 +40,18 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         </AuthLoged>
       )
     }
+
+    //Check login if loged will return component
+    if (Component.typeAuth === "logedAdmin") {
+      return (
+        <AuthLogedAdmin>
+          {
+            getLayout(<Component {...pageProps} />)
+          }
+        </AuthLogedAdmin>
+      )
+    }
+
 
     return (
       <>

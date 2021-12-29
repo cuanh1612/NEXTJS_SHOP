@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import { auth_logout_success } from '@/reduxState/actionTypes/authAction';
 import Cookie from 'js-cookie'
 import jwt from 'jsonwebtoken'
+import { getData } from 'utils/fetchData';
 
 export interface IUserListProps {
   currentUser: Partial<IUserInfor>,
@@ -48,15 +49,18 @@ export default function UserList({ user, currentUser, index }: IUserListProps) {
     //Get id of current user
     const decode: any = await jwt.verify(accessToken as string, process.env.ACCESS_TOKEN_SECRET as jwt.Secret)
     console.log(decode.id);
-    
+
     //Delete user in database and redux
     await dispatch(userDeleteItem(users, id, accessToken as string))
 
     // logout with id match with id of current user
     if (decode.id === id) {
-      Cookie.remove('refreshtoken', { path: "/api/auth/accessToken" })
-      localStorage.removeItem('firstLogin')
-      dispatch(auth_logout_success(null))
+      await getData('auth/logout').then(res => {
+        if (!res.err) {
+          localStorage.removeItem('firstLogin')
+          dispatch(auth_logout_success(null))
+        }
+      })
       return router.push('/signin')
     }
   }
