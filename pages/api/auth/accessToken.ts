@@ -15,16 +15,16 @@ const accessToken = async (req: NextApiRequest, res: NextApiResponse) => {
         //Check live refresh token
         const rf_token = await cookies.get('refreshtoken')
              
-        if (!rf_token) return res.status(400).json({ err: "Please login now!" })
+        if (!rf_token) return res.status(401).json({ err: "Please login now!", status: 401 })
 
         //Check refresh verify
         const result: any = await jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET as Secret, { ignoreExpiration: true })
         console.log(result);
         
-        if (!result) return res.status(400).json({ err: 'Your token is incorrect or has expired.' })
+        if (!result) return res.status(401).json({ err: 'Your token is incorrect or has expired.', status: 401 })
         const exp = new Date(result.exp * 1000).toDateString()
         const timeNow = new Date().toDateString()
-        if (exp < timeNow) return res.status(400).json({ err: "Please login now!" })
+        if (exp < timeNow) return res.status(401).json({ err: "Please login now!", status: 401})
         
         //Check user exist in system
         const user: IUserInfor = await Users.findById(result.id)

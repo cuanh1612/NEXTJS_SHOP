@@ -10,16 +10,22 @@ import { UseToast } from 'hooks/useToast';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { getData } from 'utils/fetchData';
 
 export interface IUsersProps {
+    user: IUserInfor
 }
 
-const Categories: NextPageWithLayout = (props: IUsersProps) => {
+const Categories: NextPageWithLayout = ({user}: IUsersProps) => {
+    //router
+    const router = useRouter()
+
     //Toast Hook
     const toast = UseToast()
+
     //Dispatch 
     const dispatch = useDispatch()
 
@@ -29,7 +35,6 @@ const Categories: NextPageWithLayout = (props: IUsersProps) => {
     //Get infor current admin
     const { currentUser, accessToken, firstLoading } = useAppSelector(state => selectAuth(state))
     const { message } = useAppSelector(state => selectUsers(state))
-
 
     //Show message of user redux
     React.useEffect(() => {
@@ -100,6 +105,34 @@ Categories.getLayout = function getLayout(page: React.ReactElement) {
     )
 }
 
-Categories.typeAuth="logedAdmin"
 
 export default Categories
+
+export const getServerSideProps: GetServerSideProps = async(context) => {
+    const cookie = context.req.headers.cookie
+    const res = await getData('auth/accessToken', "", cookie!)
+
+    if(res.status === 401){
+        return {
+            redirect: {
+                destination: "/signin",
+                permanent: false
+            }
+        }
+    }
+
+    if(res.err || !res.user || res.user.role !== 'admin') {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false
+            }
+        }
+    }
+    
+    return {
+        props: {
+            user: res.user
+        }
+    }
+}

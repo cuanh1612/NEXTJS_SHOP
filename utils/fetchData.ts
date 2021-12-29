@@ -1,10 +1,11 @@
-export const getData = async (url: string, token: string = "") => {
+export const getData = async (url: string, token: string = "", cookie: string | undefined = "") => {
     const res = await fetch(
         `${process.env.BASE_URL}/api/${url}`,
         {
             method: 'GET',
             headers: {
-                'Authorization': token
+                'Authorization': token,
+                cookie
             }
         }
     )

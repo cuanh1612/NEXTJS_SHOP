@@ -25,8 +25,10 @@ const signin = async (req: NextApiRequest, res: NextApiResponse) => {
 
         //Set cookie to save refresh token in path api/auth/accessToken
         await cookies.set('refreshtoken', refresh_token, {
-            path: '/api/auth/accessToken',
-            maxAge: Date.now() + (7 * 24 * 60 * 60 * 1000)
+            path: '/',
+            maxAge: Date.now() + (7 * 24 * 60 * 60 * 1000),
+            httpOnly: true,
+            sameSite: 'strict'
         })
 
         return res.status(200).json({
