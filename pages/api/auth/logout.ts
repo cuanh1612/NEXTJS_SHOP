@@ -10,10 +10,7 @@ const logout = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         //Set cookie to save refresh token in path api/auth/accessToken
         await cookies.set('refreshtoken', null, {
-            path: '/',
-            maxAge: Date.now(),
-            httpOnly: true,
-            sameSite: "strict"
+            maxAge: 0
         })
 
         return res.status(200).json({

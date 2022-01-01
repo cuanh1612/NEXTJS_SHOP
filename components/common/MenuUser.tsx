@@ -64,7 +64,15 @@ export default function MenuUser({ user }: IMenuUserProps) {
                                     </a>
                                 </MenuItem>
                             </Link>
-                            <MenuItem onClick={handleLogout}>Products</MenuItem>
+
+                            <Link href="/create" passHref>
+                                <MenuItem>
+                                    <a>
+                                        Products
+                                    </a>
+                                </MenuItem>
+                            </Link>
+
                             <Link href="/categories" passHref>
                                 <MenuItem>
                                     <a>

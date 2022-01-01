@@ -19,7 +19,6 @@ const accessToken = async (req: NextApiRequest, res: NextApiResponse) => {
 
         //Check refresh verify
         const result: any = await jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET as Secret, { ignoreExpiration: true })
-        console.log(result);
         
         if (!result) return res.status(401).json({ err: 'Your token is incorrect or has expired.', status: 401 })
         const exp = new Date(result.exp * 1000).toDateString()

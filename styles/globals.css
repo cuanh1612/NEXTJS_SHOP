@@ -27,3 +27,8 @@ a {
 .item_table:hover {
   background-color: rgba(231, 247, 247, 0.596);
 }
+
+.img_product {
+  justify-content:center;
+  object-position: center;
+}

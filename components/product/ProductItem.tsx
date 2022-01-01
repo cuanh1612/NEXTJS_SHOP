@@ -2,8 +2,8 @@ import { IProduct } from '@/models/common';
 import { cart_message_clear } from '@/reduxState/actionTypes/CartAction';
 import { addProductCart } from '@/reduxState/asyncActions/cartAsyncAction';
 import { useAppSelector } from '@/reduxState/hooks';
-import { selectCart } from '@/reduxState/store';
-import { Box, Image, Badge, AspectRatio, Flex, Spacer, IconButton, Button } from '@chakra-ui/react';
+import { selectAuth, selectCart } from '@/reduxState/store';
+import { Box, Image, Badge, AspectRatio, Flex, Spacer, IconButton, Button, HStack } from '@chakra-ui/react';
 import { UseToast } from '@/hooks';
 import Link from 'next/link';
 import * as React from 'react';
@@ -15,7 +15,7 @@ export interface IProductItemProps {
 }
 
 export default function ProductItem({ product }: IProductItemProps) {
-    
+
     //Dispatch
     const dispatch = useDispatch()
 
@@ -25,9 +25,56 @@ export default function ProductItem({ product }: IProductItemProps) {
     //select cart state in redux
     const { products: cart, loading } = useAppSelector(state => selectCart(state))
 
+    //select infor current user state in redux
+    const { currentUser } = useAppSelector(state => selectAuth(state))
+
     //Handle add product to cart 
     const addCart = () => {
         dispatch(addProductCart(product, cart))
+    }
+
+    //User link 
+    const userLink = () => {
+        return (
+            <Flex marginTop="20px">
+                <Link href={`/product/${product._id}`}>
+                    <a>
+                        <IconButton variant="outline" colorSchema="teal" aria-label='View product detail.' icon={<AiOutlineEye />} />
+                    </a>
+                </Link>
+                <Spacer />
+                <Button disabled={(product.inStock > 0) ? false : true} isLoading={loading} onClick={() => addCart()} variant="outline" colorScheme="teal" aria-label='View product detail.' rightIcon={<AiOutlineShoppingCart />}>
+                    Add Cart
+                </Button>
+            </Flex>
+        )
+    }
+
+    //Admin link 
+    const adminLink = () => {
+        return (
+            <HStack marginTop="20px">
+                <Link href={`/create/${product._id}`}>
+                    <a>
+                        <Button
+                            variant="outline"
+                            colorScheme="teal"
+                            aria-label='View product detail.'
+                        >
+                            Update
+                        </Button>
+                    </a>
+                </Link>
+                <Spacer />
+                <Button
+                    variant="outline"
+                    colorScheme="red"
+                    aria-label='View product detail.'
+                >
+                    Delete
+                </Button>
+            </HStack>
+        )
     }
 
     return (
@@ -76,17 +123,12 @@ export default function ProductItem({ product }: IProductItemProps) {
                     </Box>
                 </Flex>
 
-                <Flex marginTop="20px">
-                    <Link href={`/product/${product._id}`}>
-                        <a>
-                            <IconButton variant="outline" colorSchema="teal" aria-label='View product detail.' icon={<AiOutlineEye />} />
-                        </a>
-                    </Link>
-                    <Spacer />
-                    <Button disabled={(product.inStock > 0)? false : true} isLoading={loading} onClick={() => addCart()} variant="outline" colorScheme="teal" aria-label='View product detail.' rightIcon={<AiOutlineShoppingCart />}>
-                        Add Cart
-                    </Button>
-                </Flex>
+                {/* user or admin link */}
+                {
+                    currentUser?.role === "admin"
+                        ? adminLink()
+                        : userLink()
+                }
             </Box>
         </Box>
     );

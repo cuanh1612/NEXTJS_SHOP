@@ -1,21 +1,19 @@
+import OrderList from '@/components/common/OrderList';
 import { UseToast } from '@/hooks';
 import { MainLayout } from '@/layouts';
 import { NextPageWithLayout } from '@/models/common';
 import { auth_save_user } from '@/reduxState/actionTypes/authAction';
+import { order_message_clear } from '@/reduxState/actionTypes/orderAction';
+import { orderAddList } from '@/reduxState/asyncActions/orderAsyncAction';
 import { useAppSelector } from '@/reduxState/hooks';
 import { selectAuth, selectOrder } from '@/reduxState/store';
 import { imageUpload, patchData, validSignUp as validUpdate } from '@/utils';
-import { Avatar, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, FormControl, FormLabel, Grid, GridItem, Input, Table, TableCaption, Tbody, Td, Tfoot, Th, Thead, Tr, VStack } from '@chakra-ui/react';
+import { Avatar, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, FormControl, FormLabel, Grid, GridItem, Input, VStack } from '@chakra-ui/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { orderAddList } from '@/reduxState/asyncActions/orderAsyncAction'
-import { getData } from '@/utils'
-import { order_message_clear } from '@/reduxState/actionTypes/orderAction';
-import OrderItem from '@/components/common/OrderItem';
-import OrderList from '@/components/common/OrderList';
 
 export interface IProfileProps {
 }
@@ -264,7 +262,7 @@ const Profile: NextPageWithLayout = (props: IProfileProps) => {
 
                 {/* List orders */}
                 <GridItem colSpan={[5, 5, 5, 3]}  >
-                    <OrderList orders={orders}/>
+                    <OrderList orders={orders} />
                 </GridItem>
             </Grid>
         </>
