@@ -45,7 +45,7 @@ export default function MenuUser({ user }: IMenuUserProps) {
                     <Avatar size='sm' name='Dan Abrahmov' src={user && user.avatar} />
                 </MenuButton>
             </Tooltip>
-            <MenuList>
+            <MenuList zIndex="2">
                 <Link href="/profile" passHref>
                     <MenuItem>
                         <a>

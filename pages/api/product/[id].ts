@@ -11,6 +11,8 @@ const productApi = async (req: NextApiRequest, res: NextApiResponse) => {
             return await getProductDetail(req, res)
         case "PUT":
             return await updateProduct(req, res)
+        case "DELETE":
+            return await deleteProduct(req, res)
         default:
             return res.status(400).json({ err: "Method mot valid." })
     }
@@ -84,6 +86,32 @@ const updateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
         //Res message success
         res.status(200).json({
             msg: 'Success! Udated a product.'
+        })
+
+    } catch (error: any) {
+        return res.status(500).json({ err: "System has some wrong!" })
+    }
+}
+
+
+const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
+    try {
+        //Check auth with middleware
+        const result: any = await auth(req, res)
+
+        //Check if user is admin
+        if (result.role !== 'admin' || !result.root)
+            return res.status(400).json({ err: 'Authentication is not valid.' })
+
+        //Get id product to update
+        const { id } = req.query
+
+        //Delete Product
+        await Products.findByIdAndDelete(id)
+
+        //Res message success
+        res.status(200).json({
+            msg: 'Deleted a product.'
         })
 
     } catch (error: any) {
