@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    "BASE_URL": "https://nextjs-shop-9u1ey5787-cuanh1612.vercel.app",
+    "BASE_URL": "https://nextjs-shop-q6oiv1x3c-cuanh1612.vercel.app",
     "MONGODB_URL": "mongodb+srv://admin:huy16120101@cluster0.rwzsn.mongodb.net/NEXT_SHOP?retryWrites=true&w=majority",
     "ACCESS_TOKEN_SECRET": "Ze]dg/hFWb5#?CV}}CfxC8!/Ha`T/+Z4EfK-^sQp33?^FXhz@*",
     "REFRESH_TOKEN_SECRET": "!3}{bt33b~Z'prh/@:W6B^amR$U4Wm/F`R4#/4Ez/3RkJgBUQZ",
