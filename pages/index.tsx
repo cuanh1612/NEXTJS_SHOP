@@ -7,13 +7,13 @@ import { auth_message_clear } from '@/reduxState/actionTypes/authAction'
 import { cart_message_clear } from '@/reduxState/actionTypes/CartAction'
 import { useAppSelector } from '@/reduxState/hooks'
 import { selectAuth, selectCart } from '@/reduxState/store'
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Box, Button, Checkbox, SimpleGrid, Stack } from '@chakra-ui/react'
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Box, Button, Center, Checkbox, SimpleGrid, Stack } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { deleteData, getData } from 'utils/fetchData'
+import { deleteData, getData, filterSearch } from '@/utils'
 
 interface IHomeProps {
   products: IProduct[],
@@ -24,6 +24,8 @@ const Home: NextPageWithLayout = ({ products, result }: IHomeProps) => {
   const [Products, setProducts] = useState(products)
   const [isCheck, setIsCheck] = useState(false)
   const [isLoadingDelete, setIsLoadingDelete] = useState(false)
+  const [isLoadingMoreProduct, setIsLoadingMoreProduct] = useState(false)
+  const [page, setPage] = useState(1)
 
   //Setup dialog delete user
   const [isOpen, setIsOpen] = useState(false)
@@ -32,6 +34,9 @@ const Home: NextPageWithLayout = ({ products, result }: IHomeProps) => {
 
   //Router
   const router = useRouter()
+
+  //Get page from router query
+  const {page: pageRouter} = router.query
 
   //Config inform
   const toast = UseToast()
@@ -47,6 +52,15 @@ const Home: NextPageWithLayout = ({ products, result }: IHomeProps) => {
 
   //Select infor current user
   const { currentUser, accessToken } = useAppSelector(state => selectAuth(state))
+
+  //Set page again when page query change (user change url and load page)
+  useEffect(() => {
+    if(pageRouter){
+      setPage(parseFloat(pageRouter as string))
+    } else {
+      setPage(1)
+    }
+  }, [pageRouter])
 
   //Handle Check 
   const handleCheck = (id: string) => {
@@ -122,6 +136,22 @@ const Home: NextPageWithLayout = ({ products, result }: IHomeProps) => {
     dispatch(cart_message_clear())
   }, [dispatch, messageCart])
 
+  //Hanle loadmore
+  const handleLoadmore = async () => {
+    //Set loading loadmore
+    setIsLoadingMoreProduct(true)
+
+    setPage(page + 1)
+    await filterSearch({
+      router,
+      category: "",
+      page: page + 1
+    })
+
+    //Set loading loadmore
+    setIsLoadingMoreProduct(false)
+  }
+
   return (
     <>
       <Head>
@@ -169,6 +199,22 @@ const Home: NextPageWithLayout = ({ products, result }: IHomeProps) => {
         }
       </Box>
 
+      {
+        result <= page * 6
+          ? <></>
+          : (
+            <Center marginTop="20px">
+              <Button
+                onClick={handleLoadmore}
+                colorScheme="teal"
+                variant="ghost"
+                isLoading={isLoadingMoreProduct}
+                loadingText='Loading More ...'
+              >Load More</Button>
+            </Center>
+          )
+      }
+
       {/* Dialog display when user enter delete button */}
       <AlertDialog
         isOpen={isOpen}
@@ -210,8 +256,15 @@ Home.getLayout = function getLayout(page: ReactElement) {
 
 export default Home
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await getData('product')
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const page: number = parseFloat(query.page as string) || 1
+  const category = query.category || "all"
+  const sort = query.sort || ''
+  const search = query.search || 'all'
+
+  const res = await getData(
+    `product?&limit=${page * 6}&category=${category}&sort=${sort}&title=${search}`
+  )
 
   return {
     props: {

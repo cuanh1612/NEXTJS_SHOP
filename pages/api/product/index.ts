@@ -2,6 +2,7 @@ import Products from '@/models/productModel'
 import { connectDB } from '@/utils'
 import { NextApiRequest, NextApiResponse } from 'next'
 import auth from '@/middleware/auth'
+import mongoose from 'mongoose'
 
 connectDB()
 
@@ -17,12 +18,20 @@ const productApi = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 const getProducts = async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-        const products = await Products.find()
+    try {        
+        const features = new APIfeatures(Products.find(), req.query)
+        .filtering().sorting().pagination()
 
+        //Get products 
+        const products = await features.query
+
+        //Get Numbers of products
+        const numberProducts = await (await Products.find()).length       
+
+        //Res products and number products
         return res.status(200).json({
             status: 'success',
-            result: products.length,
+            result: numberProducts,
             products
         })
 
@@ -95,6 +104,57 @@ const createProduct = async (req: NextApiRequest, res: NextApiResponse) => {
 
     } catch (error: any) {
         return res.status(500).json({ err: "System has some wrong!" })
+    }
+}
+
+//Class API for filter, pagination, sort products
+class APIfeatures {
+    //field
+    query: mongoose.Query<any[], any, {}, any>
+    queryString: any;
+
+    constructor(query: mongoose.Query<any[], any, {}, any>, queryString: any) {
+        this.query = query
+        this.queryString = queryString
+    }
+
+    filtering() {
+        const queryObj = { ...this.queryString }        
+        
+        const excludeFields = ['page', 'sort', 'limit']
+        excludeFields.map(e => delete queryObj[e])
+        
+        if (queryObj.category !== "all")
+            this.query.find({ category: queryObj.category })
+        if (queryObj.title !== "all")
+            this.query.find({ title: { $regex: queryObj.title } })
+
+        this.query.find()
+
+        return this
+    }
+
+    sorting() {
+        if (this.queryString.sort) {
+            const sortBy = this.queryString.sort.split(',').join('')
+            
+            this.query = this.query.sort(sortBy)
+        } else {
+            this.query = this.query.sort('-createdAt')
+        }
+
+        return this
+    }
+
+    pagination() {
+        const page = this.queryString.page * 1 || 1
+        const limit = this.queryString.limit * 1 || 6
+        const skip = (page - 1) * limit
+        console.log("ds", page);
+        
+        this.query = this.query.skip(skip).limit(limit)
+
+        return this
     }
 }
 
