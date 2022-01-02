@@ -1,5 +1,5 @@
 import { Iorder } from '@/models/common';
-import { Box, Table, TableCaption, Tbody, Th, Thead, Tr, Tfoot } from '@chakra-ui/react';
+import { Box, Table, TableCaption, Tbody, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
 import * as React from 'react';
 import OrderItem from './OrderItem';
 

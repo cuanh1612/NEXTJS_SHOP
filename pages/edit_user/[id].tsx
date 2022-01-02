@@ -1,17 +1,17 @@
 import { MainLayout } from '@/layouts';
 import { IUserInfor, NextPageWithLayout } from '@/models/common';
+import { userUpdateItem } from '@/reduxState/asyncActions/usersAsyncAction';
 import { useAppSelector } from '@/reduxState/hooks';
-import { selectAuth, selectOrder, selectUsers } from '@/reduxState/store';
-import { Avatar, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, FormControl, FormLabel, Grid, GridItem, Input, VStack, Checkbox, Container, Center } from '@chakra-ui/react';
+import { selectAuth, selectUsers } from '@/reduxState/store';
+import { patchData } from '@/utils';
+import { Avatar, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Center, Checkbox, FormControl, FormLabel, Input, VStack } from '@chakra-ui/react';
+import { UseToast } from 'hooks/useToast';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { patchData } from '@/utils';
-import { UseToast } from 'hooks/useToast';
 import { useDispatch } from 'react-redux';
-import { userUpdateItem } from '@/reduxState/asyncActions/usersAsyncAction';
 
 export interface IEditUserProps {
 }
@@ -46,7 +46,7 @@ const EditUser: NextPageWithLayout = (props: IEditUserProps) => {
                 setCheckAdmin(user.role === "admin" ? true : false)
             }
         })
-    }, [users])
+    }, [users, id])
 
     //Handle change role
     const handleCheck = () => {
@@ -70,8 +70,6 @@ const EditUser: NextPageWithLayout = (props: IEditUserProps) => {
         }))
         return toast.showToast("Infrom update user's role:", res.msg, "success")
     }
-
-    console.log(checkAdmin);
 
     return (
         <>

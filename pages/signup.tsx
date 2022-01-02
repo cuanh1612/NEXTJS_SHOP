@@ -5,7 +5,7 @@ import { auth_message_clear } from '@/reduxState/actionTypes/authAction'
 import { signUpUser } from '@/reduxState/asyncActions/authAsyncAction'
 import { useAppSelector } from "@/reduxState/hooks"
 import { selectAuth } from "@/reduxState/store"
-import { getData, validSignUp } from '@/utils'
+import { validSignUp } from '@/utils'
 import { Box, Button, Center, FormControl, FormHelperText, FormLabel, Input } from '@chakra-ui/react'
 import Head from 'next/head'
 import Link from 'next/link'

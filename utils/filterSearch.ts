@@ -2,15 +2,12 @@ import { NextRouter } from "next/router";
 
 export interface initialFilter{
     router: NextRouter, 
-    page: number, 
+    page?: number, 
     category?: string, 
     sort?: string, 
     search?: string
 } 
 export const filterSearch = ({router, page, category, sort, search}: initialFilter) => {
-
-    console.log('sfsasfsafsfsdfdfs');
-    
     //Get path name
     const path = router.pathname
     //Get query to nextpage or loadmore product

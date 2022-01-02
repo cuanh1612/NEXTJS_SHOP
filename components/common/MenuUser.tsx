@@ -1,13 +1,12 @@
+import { UseToast } from '@/hooks';
 import { IUserInfor } from '@/models/common';
+import { auth_logout_success } from '@/reduxState/actionTypes/authAction';
 import { Avatar, Button, Menu, MenuButton, MenuItem, MenuList, Tooltip } from '@chakra-ui/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { BiChevronDown } from 'react-icons/bi';
-import Cookie from 'js-cookie'
-import { useRouter } from 'next/router';
-import { UseToast } from '@/hooks';
 import { useDispatch } from 'react-redux';
-import { auth_logout_success } from '@/reduxState/actionTypes/authAction';
-import Link from 'next/link';
 import { getData } from 'utils/fetchData';
 
 export interface IMenuUserProps {

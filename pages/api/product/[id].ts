@@ -1,7 +1,7 @@
+import auth from '@/middleware/auth'
 import Products from '@/models/productModel'
 import { connectDB } from '@/utils'
 import { NextApiRequest, NextApiResponse } from 'next'
-import auth from '@/middleware/auth'
 
 connectDB()
 

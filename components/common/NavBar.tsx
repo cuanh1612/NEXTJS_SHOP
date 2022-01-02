@@ -1,6 +1,4 @@
 import { IUserInfor } from '@/models/common';
-import { useAppSelector } from '@/reduxState/hooks';
-import { selectAuth } from '@/reduxState/store';
 import { Box, Flex, HStack, Spacer } from '@chakra-ui/react';
 import Link from 'next/link';
 import * as React from 'react';

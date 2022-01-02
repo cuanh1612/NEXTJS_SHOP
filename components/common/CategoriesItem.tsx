@@ -1,8 +1,8 @@
 import { ICategory } from '@/models/common';
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Box, Button, Flex, HStack, IconButton, Spacer } from '@chakra-ui/react';
 import * as React from 'react';
-import { GrDocumentUpdate } from 'react-icons/gr'
-import { AiOutlineDelete } from 'react-icons/ai'
+import { AiOutlineDelete } from 'react-icons/ai';
+import { GrDocumentUpdate } from 'react-icons/gr';
 
 
 export interface ICategoriesItemProps {

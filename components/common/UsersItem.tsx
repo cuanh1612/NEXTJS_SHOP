@@ -1,21 +1,19 @@
-import { IMessage, IUserInfor } from '@/models/common';
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Avatar, Box, Button, Flex, HStack, IconButton, Td, Tooltip, Tr } from '@chakra-ui/react';
-import Link from 'next/link';
-import * as React from 'react';
-import { BsCheckLg } from 'react-icons/bs';
-import { MdOutlineDangerous } from 'react-icons/md'
-import { GrDocumentUpdate } from 'react-icons/gr'
-import { AiOutlineDelete } from 'react-icons/ai'
-import { useDispatch } from 'react-redux';
+import { IUserInfor } from '@/models/common';
+import { auth_logout_success } from '@/reduxState/actionTypes/authAction';
 import { userDeleteItem } from '@/reduxState/asyncActions/usersAsyncAction';
 import { useAppSelector } from '@/reduxState/hooks';
 import { selectAuth, selectUsers } from '@/reduxState/store';
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Avatar, Box, Button, Flex, HStack, IconButton, Td, Tooltip, Tr } from '@chakra-ui/react';
 import { UseToast } from 'hooks/useToast';
-import { users_message_clear } from '@/reduxState/actionTypes/usersAction';
+import jwt from 'jsonwebtoken';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { auth_logout_success } from '@/reduxState/actionTypes/authAction';
-import Cookie from 'js-cookie'
-import jwt from 'jsonwebtoken'
+import * as React from 'react';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { BsCheckLg } from 'react-icons/bs';
+import { GrDocumentUpdate } from 'react-icons/gr';
+import { MdOutlineDangerous } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
 import { getData } from 'utils/fetchData';
 
 export interface IUserListProps {
@@ -48,7 +46,6 @@ export default function UserList({ user, currentUser, index }: IUserListProps) {
   const deleteUser = async (id: string) => {
     //Get id of current user
     const decode: any = await jwt.verify(accessToken as string, process.env.ACCESS_TOKEN_SECRET as jwt.Secret)
-    console.log(decode.id);
 
     //Delete user in database and redux
     await dispatch(userDeleteItem(users, id, accessToken as string))

@@ -1,8 +1,8 @@
 import Users from '@/models/userModel'
 import { connectDB, createAccessToken, createRefreshToken } from '@/utils'
 import bcrypt from 'bcrypt'
-import { NextApiRequest, NextApiResponse } from 'next'
 import Cookie from 'cookies'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 connectDB()
 

@@ -1,8 +1,9 @@
 import NavBar from '@/components/common/NavBar';
 import { useAppSelector } from '@/reduxState/hooks';
 import { selectAuth } from '@/reduxState/store';
-import { Container } from '@chakra-ui/react';
+import { Box, Container, Stack } from '@chakra-ui/react';
 import * as React from 'react';
+import Footer from './Footer/index'
 
 export interface IMainLayout {
   children: React.ReactNode
@@ -18,6 +19,8 @@ export function MainLayout({ children }: IMainLayout) {
       <div>
         {children}
       </div>
+      <Box as="hr" marginTop="40px" />
+      <Footer/>
     </Container>
   );
 }

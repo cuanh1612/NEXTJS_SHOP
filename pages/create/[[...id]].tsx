@@ -2,20 +2,17 @@ import { MainLayout } from '@/layouts';
 import { IUserInfor, NextPageWithLayout } from '@/models/common';
 import { useAppSelector } from '@/reduxState/hooks';
 import { selectAuth, selectCategories } from '@/reduxState/store';
-import { AspectRatio, Box, Image, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Center, Flex, FormControl, FormHelperText, FormLabel, Grid, GridItem, HStack, IconButton, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, SimpleGrid, Stack, Textarea, Tooltip } from '@chakra-ui/react';
+import { imageUpload } from '@/utils';
+import { AspectRatio, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Center, FormControl, FormLabel, Grid, GridItem, HStack, Image, Input, Select, SimpleGrid, Stack, Textarea, Tooltip } from '@chakra-ui/react';
+import { UseToast } from 'hooks/useToast';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import * as React from 'react';
-import { getData, postData, putData } from 'utils/fetchData';
-import { BsFillFileEarmarkImageFill } from 'react-icons/bs'
-import { UseToast } from 'hooks/useToast';
-import { isArray } from 'lodash';
-import { IoIosRemoveCircle } from 'react-icons/io'
-import { imageUpload } from '@/utils';
 import { useRouter } from 'next/router';
-import { setPriority } from 'os';
-import { log } from 'console';
+import * as React from 'react';
+import { BsFillFileEarmarkImageFill } from 'react-icons/bs';
+import { IoIosRemoveCircle } from 'react-icons/io';
+import { getData, postData, putData } from 'utils/fetchData';
 
 export interface ICreateProductProps {
     user: IUserInfor
@@ -36,7 +33,6 @@ const CreateProduct: NextPageWithLayout = (props: ICreateProductProps) => {
 
     //Get id product when update porduct 
     const { id } = router.query
-    console.log("ID update porduct", id);
 
     //Toast 
     const toast = UseToast()
@@ -475,7 +471,6 @@ CreateProduct.getLayout = function getLayout(page: React.ReactElement) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const res = await getData('auth/accessToken', "", context.req.headers.cookie)
-    console.log(res.user);
 
     if (res.status === 401) {
         return {

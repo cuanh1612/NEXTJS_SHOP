@@ -1,4 +1,5 @@
 import Empty from '@/components/common/Empty'
+import Filter from '@/components/common/Filter'
 import ProductItem from '@/components/product/ProductItem'
 import { UseToast } from '@/hooks'
 import { MainLayout } from '@/layouts'
@@ -7,13 +8,13 @@ import { auth_message_clear } from '@/reduxState/actionTypes/authAction'
 import { cart_message_clear } from '@/reduxState/actionTypes/CartAction'
 import { useAppSelector } from '@/reduxState/hooks'
 import { selectAuth, selectCart } from '@/reduxState/store'
+import { deleteData, filterSearch, getData } from '@/utils'
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Box, Button, Center, Checkbox, SimpleGrid, Stack } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { deleteData, getData, filterSearch } from '@/utils'
 
 interface IHomeProps {
   products: IProduct[],
@@ -157,6 +158,8 @@ const Home: NextPageWithLayout = ({ products, result }: IHomeProps) => {
       <Head>
         <title>Home Page</title>
       </Head>
+
+      <Filter/>
 
       {
         currentUser?.role === 'admin' && (

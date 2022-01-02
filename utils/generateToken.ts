@@ -7,7 +7,6 @@ export const createAccessToken = (payload: object) => {
 export const createRefreshToken = (payload: object) => {
     const token = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET as Secret, { expiresIn: '7d' })
     const result: any = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET as Secret, { ignoreExpiration: true })
-    console.log('in generate', result);
 
     return token
 }

@@ -1,16 +1,14 @@
+import { UseToast } from '@/hooks';
 import { IProduct } from '@/models/common';
-import { cart_message_clear } from '@/reduxState/actionTypes/CartAction';
 import { addProductCart } from '@/reduxState/asyncActions/cartAsyncAction';
 import { useAppSelector } from '@/reduxState/hooks';
 import { selectAuth, selectCart } from '@/reduxState/store';
-import { Box, Image, Badge, AspectRatio, Flex, Spacer, IconButton, Button, HStack, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, Checkbox } from '@chakra-ui/react';
-import { UseToast } from '@/hooks';
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AspectRatio, Badge, Box, Button, Checkbox, Flex, HStack, IconButton, Image, Spacer } from '@chakra-ui/react';
 import Link from 'next/link';
 import * as React from 'react';
 import { AiOutlineEye, AiOutlineShoppingCart } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
 import { deleteData } from 'utils/fetchData';
-import { AiOutlineCheck } from 'react-icons/ai'
 
 export interface IProductItemProps {
     product: IProduct

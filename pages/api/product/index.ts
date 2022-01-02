@@ -1,8 +1,8 @@
+import auth from '@/middleware/auth'
 import Products from '@/models/productModel'
 import { connectDB } from '@/utils'
-import { NextApiRequest, NextApiResponse } from 'next'
-import auth from '@/middleware/auth'
 import mongoose from 'mongoose'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 connectDB()
 
@@ -119,7 +119,7 @@ class APIfeatures {
     }
 
     filtering() {
-        const queryObj = { ...this.queryString }        
+        const queryObj = { ...this.queryString }   
         
         const excludeFields = ['page', 'sort', 'limit']
         excludeFields.map(e => delete queryObj[e])
@@ -128,7 +128,7 @@ class APIfeatures {
             this.query.find({ category: queryObj.category })
         if (queryObj.title !== "all")
             this.query.find({ title: { $regex: queryObj.title } })
-
+        
         this.query.find()
 
         return this
@@ -150,7 +150,6 @@ class APIfeatures {
         const page = this.queryString.page * 1 || 1
         const limit = this.queryString.limit * 1 || 6
         const skip = (page - 1) * limit
-        console.log("ds", page);
         
         this.query = this.query.skip(skip).limit(limit)
 

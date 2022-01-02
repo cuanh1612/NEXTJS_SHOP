@@ -1,4 +1,4 @@
-import { AspectRatio, Image, Box, Center, HStack } from '@chakra-ui/react';
+import { AspectRatio, Box, Center, Image } from '@chakra-ui/react';
 import * as React from 'react';
 
 export interface IEmptyProps {

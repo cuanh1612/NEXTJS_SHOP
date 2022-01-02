@@ -1,10 +1,9 @@
-import Users from '@/models/userModel'
-import { connectDB } from '@/utils'
-import { NextApiRequest, NextApiResponse } from 'next'
-import { createAccessToken } from '@/utils'
-import jwt, { Secret } from 'jsonwebtoken'
 import { IUserInfor } from '@/models/common'
+import Users from '@/models/userModel'
+import { connectDB, createAccessToken } from '@/utils'
 import Cookie from 'cookies'
+import jwt, { Secret } from 'jsonwebtoken'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 connectDB()
 

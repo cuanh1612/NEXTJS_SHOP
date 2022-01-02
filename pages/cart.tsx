@@ -4,17 +4,16 @@ import { UseToast } from '@/hooks';
 import { MainLayout } from '@/layouts';
 import { IProduct, NextPageWithLayout } from '@/models/common';
 import { cart_message_clear, cart_save_new } from '@/reduxState/actionTypes/CartAction';
+import { addMessageCart, cartClearAll } from '@/reduxState/asyncActions/cartAsyncAction';
 import { useAppSelector } from '@/reduxState/hooks';
 import { selectAuth, selectCart } from '@/reduxState/store';
 import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Flex, FormControl, FormHelperText, FormLabel, Grid, GridItem, Input, Spacer, Textarea } from '@chakra-ui/react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { getData, postData } from 'utils/fetchData';
-import PaypalBtn from '@/components/cart/paypalBtn'
-import { addMessageCart, cartClearAll } from '@/reduxState/asyncActions/cartAsyncAction';
-import { useRouter } from 'next/router';
 
 export interface ICartProps {
 }

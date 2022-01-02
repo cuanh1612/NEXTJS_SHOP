@@ -1,5 +1,4 @@
 import { order_add_message } from '@/reduxState/actionTypes/orderAction'
-import { addMessageCart, cartClearAll } from '@/reduxState/asyncActions/cartAsyncAction'
 import { orderUpdateItem } from '@/reduxState/asyncActions/orderAsyncAction'
 import { patchData } from '@/utils'
 import { useEffect as UseEffect, useRef as UseRef } from 'react'

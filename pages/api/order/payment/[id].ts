@@ -15,7 +15,6 @@ const paymentOrder = async (req: NextApiRequest, res: NextApiResponse) => {
         //Get Id order
         const {id} = req.query
         const {paymentId} = req.body
-        console.log("Id payment ne", paymentId);
         
 
         //Update order to payment

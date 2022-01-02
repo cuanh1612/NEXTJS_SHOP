@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken'
 import Users from '@/models/userModel'
+import jwt from 'jsonwebtoken'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const auth = async (req: NextApiRequest, res: NextApiResponse) => {

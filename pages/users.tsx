@@ -1,6 +1,6 @@
 import UserList from '@/components/common/UsersItem';
 import { MainLayout } from '@/layouts';
-import { IMessage, IUserInfor, NextPageWithLayout } from '@/models/common';
+import { IUserInfor, NextPageWithLayout } from '@/models/common';
 import { users_message_clear } from '@/reduxState/actionTypes/usersAction';
 import { useAppSelector } from '@/reduxState/hooks';
 import { selectAuth, selectUsers } from '@/reduxState/store';

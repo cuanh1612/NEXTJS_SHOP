@@ -1,9 +1,8 @@
+import Loading from '@/components/common/Loading';
 import { useAppSelector } from '@/reduxState/hooks';
 import { selectAuth } from '@/reduxState/store';
-import { Box, Center, Flex, Spinner } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import Loading from '@/components/common/Loading'
 
 export interface IAppProps {
   children: any;

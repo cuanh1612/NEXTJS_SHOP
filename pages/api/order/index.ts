@@ -22,8 +22,6 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse) => {
             total: number
         }  
         
-        console.log("Hello", address, mobile, cart, total);
-        
 
         const newOrder = new Orders({
             user: result.id, address, mobile, cart, total

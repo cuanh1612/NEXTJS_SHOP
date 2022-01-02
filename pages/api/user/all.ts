@@ -1,8 +1,6 @@
 import auth from '@/middleware/auth'
-import { IUserInfor } from '@/models/common'
 import Users from '@/models/userModel'
 import { connectDB } from '@/utils'
-import { UpdateQuery } from 'mongoose'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 connectDB()

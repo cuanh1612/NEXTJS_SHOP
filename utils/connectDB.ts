@@ -1,8 +1,6 @@
 import mongoose, { ConnectOptions } from "mongoose";
 
 export const connectDB = async () => {
-    console.log(process.env.MONGODB_URL);
-    
     //Check already connect mongoDB
     if (mongoose.connections[0].readyState) {
         console.log('Already connected.')

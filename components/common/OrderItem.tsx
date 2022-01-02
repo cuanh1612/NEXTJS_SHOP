@@ -1,10 +1,9 @@
 import { Iorder } from '@/models/common';
-import { IconButton, Td, Tooltip, Tr } from '@chakra-ui/react';
-import * as React from 'react';
-import { MdOutlineDangerous } from 'react-icons/md'
-import { BsCheckLg } from 'react-icons/bs'
+import { Td, Tooltip, Tr } from '@chakra-ui/react';
 import Link from 'next/link';
-import { AiOutlineEye } from 'react-icons/ai'
+import * as React from 'react';
+import { BsCheckLg } from 'react-icons/bs';
+import { MdOutlineDangerous } from 'react-icons/md';
 
 export interface IOrderItemProps {
     order: Iorder

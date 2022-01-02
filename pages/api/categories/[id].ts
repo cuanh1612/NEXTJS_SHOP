@@ -1,5 +1,6 @@
 import auth from '@/middleware/auth'
 import categoryModel from '@/models/categoryModel'
+import Products from '@/models/productModel'
 import { connectDB } from '@/utils'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -54,7 +55,16 @@ const delteCategory = async (req: NextApiRequest, res: NextApiResponse) => {
         //Get id
         const {id} = req.query
 
+        //Check if has products has relationship with category will delete
+        //If have products return err
+        const products = await Products.find({category: id})
+        
+        if(products.length > 0) 
+            return res.status(400).json({ err: 'Please delete all products with a relationship.' })
+        
+        //Delete Category
         await categoryModel.findByIdAndDelete(id)
+
         //Return categories
         return res.status(200).json({
             msg: "Success! Deleted category.",

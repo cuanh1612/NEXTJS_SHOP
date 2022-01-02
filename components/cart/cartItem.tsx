@@ -1,11 +1,11 @@
 import { IProduct } from '@/models/common';
+import { cart_save_new } from '@/reduxState/actionTypes/CartAction';
+import { decreaseProduct, increaseProduct } from '@/reduxState/asyncActions/cartAsyncAction';
 import { Box, Button, Flex, HStack, IconButton, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, useDisclosure } from '@chakra-ui/react';
 import Link from 'next/link';
 import * as React from 'react';
+import { MdDeleteForever } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
-import { increaseProduct, decreaseProduct } from '@/reduxState/asyncActions/cartAsyncAction'
-import { MdDeleteForever } from 'react-icons/md'
-import { cart_save_new } from '@/reduxState/actionTypes/CartAction';
 
 export interface IAppProps {
     cart: IProduct[],

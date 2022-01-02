@@ -44,7 +44,7 @@ function GlobalContextProvider({ children }: IGlobalContextProps) {
     } else {
       setLoading(false)
     }
-  }, [])
+  }, [dispatch])
   //-------------------------------------------
 
 
@@ -56,7 +56,7 @@ function GlobalContextProvider({ children }: IGlobalContextProps) {
     if (Next_Shop_Cart) {
       dispatch(cart_save_new(Next_Shop_Cart))
     }
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     localStorage.setItem('Next_Shop_Cart', JSON.stringify(cart))
@@ -68,15 +68,13 @@ function GlobalContextProvider({ children }: IGlobalContextProps) {
     if (accessToken && currentUser?.role === "admin") {
       dispatch(getAllUsers(accessToken as string))
     }
-  }, [accessToken, currentUser])
+  }, [accessToken, currentUser, dispatch])
   //Get all users when current user has role is admin--------
 
   //Get all categories when current user has logged
   useEffect(() => {
-    if (accessToken) {
       dispatch(getCategories())
-    }
-  }, [accessToken, dispatch])
+  }, [dispatch])
 
   const value = {
     user,
@@ -95,3 +93,4 @@ function GlobalContextProvider({ children }: IGlobalContextProps) {
 }
 
 export { GlobalContext, GlobalContextProvider };
+

@@ -1,3 +1,5 @@
+import Loading from '@/components/common/Loading';
+import { UseToast } from '@/hooks';
 import { MainLayout } from '@/layouts';
 import { IProduct, NextPageWithLayout } from '@/models/common';
 import { cart_message_clear } from '@/reduxState/actionTypes/CartAction';
@@ -5,16 +7,14 @@ import { addProductCart } from '@/reduxState/asyncActions/cartAsyncAction';
 import { useAppSelector } from '@/reduxState/hooks';
 import { selectCart } from '@/reduxState/store';
 import { AspectRatio, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Flex, Grid, GridItem, Image, Stack } from '@chakra-ui/react';
-import { UseToast } from '@/hooks';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
 import { getData } from 'utils/fetchData';
-import { useRouter } from 'next/router';
-import Loading from '@/components/common/Loading';
 
 export interface IProductDetailProps {
     product: IProduct

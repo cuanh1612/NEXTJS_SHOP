@@ -1,17 +1,17 @@
-import AuthNotLoged from '@/components/common/Auth/AuthNotLogin'
 import AuthLoged from '@/components/common/Auth/AuthLogin'
 import AuthLogedAdmin from '@/components/common/Auth/AuthLoginAdmin'
+import AuthNotLoged from '@/components/common/Auth/AuthNotLogin'
 import { AppPropsWithLayout } from '@/models/common'
 import { store } from '@/reduxState/store'
 import { theme } from '@/theme'
 import { getData } from '@/utils'
 import { ChakraProvider } from "@chakra-ui/react"
 import { GlobalContextProvider } from 'contextAPI/globalContext'
+import Script from 'next/script'
 import { JSXElementConstructor, ReactElement } from 'react'
 import { Provider } from 'react-redux'
 import { SWRConfig } from 'swr'
 import '../styles/globals.css'
-import Script from 'next/script'
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available

@@ -1,11 +1,11 @@
+import { auth_signin_success } from '@/reduxState/actionTypes/authAction';
+import { getData } from '@/utils';
 import { Box, Button, Drawer, DrawerBody, DrawerContent, DrawerOverlay, HStack, IconButton, useDisclosure, VStack } from '@chakra-ui/react';
 import Link from 'next/link';
-import * as React from 'react';
-import { getData } from '@/utils';
 import { useRouter } from 'next/router';
+import * as React from 'react';
+import { AiOutlineMenu } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
-import { auth_signin_success } from '@/reduxState/actionTypes/authAction';
-import {AiOutlineMenu} from 'react-icons/ai'
 
 export default function DrawerNavbar() {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -51,7 +51,7 @@ export default function DrawerNavbar() {
             </HStack>
 
             <Box display={["block", "block", "none"]}>
-                <IconButton aria-label='Button menu' icon={<AiOutlineMenu/>} colorScheme='teal' variant="outline" onClick={onOpen}/>
+                <IconButton aria-label='Button menu' icon={<AiOutlineMenu />} colorScheme='teal' variant="outline" onClick={onOpen} />
                 <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
                     <DrawerOverlay />
                     <DrawerContent>
