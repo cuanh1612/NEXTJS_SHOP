@@ -2,7 +2,7 @@ import { UseToast } from '@/hooks';
 import { IProduct } from '@/models/common';
 import { addProductCart } from '@/reduxState/asyncActions/cartAsyncAction';
 import { useAppSelector } from '@/reduxState/hooks';
-import { selectAuth, selectCart } from '@/reduxState/store';
+import { selectAuth, selectCart, selectCategories } from '@/reduxState/store';
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AspectRatio, Badge, Box, Button, Checkbox, Flex, HStack, IconButton, Image, Spacer } from '@chakra-ui/react';
 import Link from 'next/link';
 import * as React from 'react';
@@ -35,6 +35,9 @@ export default function ProductItem({ product, handleCheck }: IProductItemProps)
 
     //select infor current user state in redux
     const { currentUser, accessToken } = useAppSelector(state => selectAuth(state))
+
+    //Select categories from redux
+    const {categories} = useAppSelector(state => selectCategories(state))
 
     //Handle add product to cart 
     const addCart = () => {
@@ -158,7 +161,19 @@ export default function ProductItem({ product, handleCheck }: IProductItemProps)
                 <Box p='6'>
                     <Box display='flex' alignItems='baseline'>
                         <Badge borderRadius='full' px='2' colorScheme='teal'>
-                            Animal
+                            {
+                                categories.map(category => {
+                                    if(category._id === product.category){
+                                        return (
+                                            <Box>
+                                                {
+                                                    category.name
+                                                }
+                                            </Box>
+                                        )
+                                    }
+                                })
+                            }
                         </Badge>
 
                         <Spacer />

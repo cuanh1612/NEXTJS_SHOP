@@ -317,7 +317,6 @@ const CreateProduct: NextPageWithLayout = (props: ICreateProductProps) => {
                             <FormControl>
                                 <FormLabel htmlFor='price'>Price</FormLabel>
                                 <Input
-                                    type="number"
                                     min={0}
                                     id='price'
                                     name='price'
