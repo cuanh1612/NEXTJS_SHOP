@@ -8,6 +8,31 @@
 - Paypal
 - Chakra UI
 - Other libary
+
+## Demo:
+
+https://nextjs-shop-five.vercel.app/product/61d29a160f283aec85c4135a
+
+## Interface User:
+- Home page (add cart, view detail product, load more):
+![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20135817.jpg?raw=true)
+![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20135854.jpg?raw=true)
+
+- Detail product page:
+![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20143122.jpg?raw=true)
+
+- Cart Page:
+![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20135916.jpg?raw=true)
+
+- Detail order:
+![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20135951.jpg?raw=true)
+
+- Payment with paypal:
+![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20140011.jpg?raw=true)
+
+- Profile page (update profile and view list orders):
+![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20140028.jpg?raw=true)
+
 ## Interface Admin:
 - Sign in:
 ![Interface Admin](https://raw.githubusercontent.com/cuanh1612/NEXTJS_SHOP/main/InterfaceAdmin/Screenshot%202022-01-03%20135316.jpg)
@@ -38,22 +63,6 @@
 - Detail Order (Make as Delivered):
 ![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/InterfaceAdmin/Screenshot%202022-01-03%20141941.jpg?raw=true)
 
-## Interface User:
-- Home page (add cart, view detail product, load more):
-![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20135817.jpg?raw=true)
-![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20135854.jpg?raw=true)
-
-- Cart Page:
-![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20135916.jpg?raw=true)
-
-- Detail order:
-![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20135951.jpg?raw=true)
-
-- Payment with paypal:
-![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20140011.jpg?raw=true)
-
-- Profile page (update profile and view list orders):
-![Interface Admin](https://github.com/cuanh1612/NEXTJS_SHOP/blob/main/Interface%20User/Screenshot%202022-01-03%20140028.jpg?raw=true)
 
 
 
